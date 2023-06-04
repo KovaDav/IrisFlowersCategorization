@@ -1,5 +1,5 @@
 ﻿using Microsoft.ML;
-using IrisFlowerClustering;
+//using IrisFlowerClustering;
 using IrisFlowersCategorization;
 
 string _dataPath = Path.Combine(Environment.CurrentDirectory, "Data", "iris.data");
@@ -22,3 +22,7 @@ using (var fileStream = new FileStream(_modelPath, FileMode.Create, FileAccess.W
 }
 
 var predictor = mlContext.Model.CreatePredictionEngine<IrisData, ClusterPrediction>(model);
+
+var prediction = predictor.Predict(TestIrisData.Setosa);
+Console.WriteLine($"Cluster: {prediction.PredictedClusterId}");
+Console.WriteLine($"Distances: {string.Join(" ", prediction.Distances ?? Array.Empty<float>())}");
